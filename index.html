@@ -1,0 +1,453 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueworld NWO Studio - Cyber Matrix</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .matrix-bg {
+            background-color: #050814;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+        }
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.7) 100%);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glow-cyan { filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.6)); }
+        .glow-pink { filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.6)); }
+        .glow-purple { filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6)); }
+        .glow-amber { filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6)); }
+        .glow-emerald { filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6)); }
+    </style>
+</head>
+<body class="bg-[#030712] text-slate-100 font-sans min-h-screen flex justify-center selection:bg-pink-500 selection:text-white matrix-bg">
+    <div class="w-full max-w-md glass-panel flex flex-col min-h-screen relative pb-28">
+        
+        <!-- Top Navigation Bar -->
+        <header class="sticky top-0 z-50 bg-[#090d16]/90 backdrop-blur-xl border-b border-slate-800 px-3 py-2.5 flex justify-between items-center shadow-lg">
+            <div class="flex items-center space-x-2 cursor-pointer select-none" onclick="switchView('feedView')">
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-cyan-500 via-indigo-500 to-pink-500 flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-cube text-white text-xs"></i>
+                </div>
+                <div>
+                    <h1 class="font-black tracking-wider text-xs bg-gradient-to-r from-cyan-400 via-indigo-300 to-pink-400 bg-clip-text text-transparent">blueworld</h1>
+                    <span class="text-[7px] text-pink-400 font-bold tracking-widest uppercase">NWO Studio v2.5</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-1">
+                <button type="button" onclick="switchView('feedView')" class="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-800/80 border border-slate-700 text-cyan-400 hover:bg-slate-700 hover:text-cyan-300 transition cursor-pointer" title="Home Feed"><i class="fa-solid fa-house text-xs"></i></button>
+                <button type="button" onclick="switchView('messagesView')" class="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-800/80 border border-slate-700 text-pink-400 hover:bg-slate-700 hover:text-pink-300 transition cursor-pointer relative" title="Messages"><i class="fa-solid fa-comments text-xs"></i><span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-pink-500 animate-pulse"></span></button>
+                <button type="button" onclick="switchView('callingView')" class="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-800/80 border border-slate-700 text-emerald-400 hover:bg-slate-700 hover:text-emerald-300 transition cursor-pointer" title="Calling"><i class="fa-solid fa-video text-xs"></i></button>
+                <button type="button" onclick="switchView('bankingView')" class="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-800/80 border border-slate-700 text-amber-400 hover:bg-slate-700 hover:text-amber-300 transition cursor-pointer" title="Banking"><i class="fa-solid fa-landmark text-xs"></i></button>
+                <button type="button" onclick="switchView('adminView')" class="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-800/80 border border-slate-700 text-purple-400 hover:bg-slate-700 hover:text-purple-300 transition cursor-pointer" title="Admin"><i class="fa-solid fa-shield-halved text-xs"></i></button>
+            </div>
+        </header>
+
+        <!-- MAIN VIEW CONTAINER -->
+        <main class="flex-1 overflow-y-auto">
+            
+            <!-- VIEW 1: HOME FEED & FEATURE LAUNCHPAD -->
+            <div id="feedView" class="view-section space-y-4 pt-3">
+                
+                <!-- Colorful Complex Feature Grid -->
+                <div class="px-4 grid grid-cols-4 gap-2.5">
+                    <button type="button" onclick="switchView('callingView')" class="bg-gradient-to-br from-emerald-950/80 to-slate-900 border border-emerald-500/30 hover:border-emerald-400 p-2.5 rounded-xl flex flex-col items-center justify-center space-y-1 transition text-center group cursor-pointer shadow-lg">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-video text-sm glow-emerald"></i>
+                        </div>
+                        <span class="text-[9px] text-emerald-300 font-medium">Calling</span>
+                    </button>
+                    
+                    <button type="button" onclick="switchView('messagesView')" class="bg-gradient-to-br from-pink-950/80 to-slate-900 border border-pink-500/30 hover:border-pink-400 p-2.5 rounded-xl flex flex-col items-center justify-center space-y-1 transition text-center group cursor-pointer shadow-lg">
+                        <div class="w-8 h-8 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-400 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-comments text-sm glow-pink"></i>
+                        </div>
+                        <span class="text-[9px] text-pink-300 font-medium">Messages</span>
+                    </button>
+
+                    <button type="button" onclick="switchView('communitiesView')" class="bg-gradient-to-br from-cyan-950/80 to-slate-900 border border-cyan-500/30 hover:border-cyan-400 p-2.5 rounded-xl flex flex-col items-center justify-center space-y-1 transition text-center group cursor-pointer shadow-lg">
+                        <div class="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-users-rectangle text-sm glow-cyan"></i>
+                        </div>
+                        <span class="text-[9px] text-cyan-300 font-medium">Groups</span>
+                    </button>
+
+                    <button type="button" onclick="switchView('bankingView')" class="bg-gradient-to-br from-amber-950/80 to-slate-900 border border-amber-500/30 hover:border-amber-400 p-2.5 rounded-xl flex flex-col items-center justify-center space-y-1 transition text-center group cursor-pointer shadow-lg">
+                        <div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-landmark text-sm glow-amber"></i>
+                        </div>
+                        <span class="text-[9px] text-amber-300 font-medium">Banking</span>
+                    </button>
+
+                    <button type="button" onclick="switchView('revenueView')" class="bg-gradient-to-br from-indigo-950/80 to-slate-900 border border-indigo-500/30 hover:border-indigo-400 p-2.5 rounded-xl flex flex-col items-center justify-center space-y-1 transition text-center group cursor-pointer shadow-lg">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-wallet text-sm glow-purple"></i>
+                        </div>
+                        <span class="text-[9px] text-indigo-300 font-medium">Revenue</span>
+                    </button>
+
+                    <button type="button" onclick="switchView('moviesView')" class="bg-gradient-to-br from-rose-950/80 to-slate-900 border border-rose-500/30 hover:border-rose-400 p-2.5 rounded-xl flex flex-col items-center justify-center space-y-1 transition text-center group cursor-pointer shadow-lg">
+                        <div class="w-8 h-8 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-400 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-film text-sm"></i>
+                        </div>
+                        <span class="text-[9px] text-rose-300 font-medium">Movies</span>
+                    </button>
+
+                    <button type="button" onclick="switchView('musicView')" class="bg-gradient-to-br from-violet-950/80 to-slate-900 border border-violet-500/30 hover:border-violet-400 p-2.5 rounded-xl flex flex-col items-center justify-center space-y-1 transition text-center group cursor-pointer shadow-lg">
+                        <div class="w-8 h-8 rounded-lg bg-violet-500/20 flex items-center justify-center text-violet-400 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-music text-sm glow-purple"></i>
+                        </div>
+                        <span class="text-[9px] text-violet-300 font-medium">Music</span>
+                    </button>
+
+                    <button type="button" onclick="switchView('adminView')" class="bg-gradient-to-br from-fuchsia-950/80 to-slate-900 border border-fuchsia-500/30 hover:border-fuchsia-400 p-2.5 rounded-xl flex flex-col items-center justify-center space-y-1 transition text-center group cursor-pointer shadow-lg">
+                        <div class="w-8 h-8 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-400 group-hover:scale-110 transition">
+                            <i class="fa-solid fa-shield-cat text-sm"></i>
+                        </div>
+                        <span class="text-[9px] text-fuchsia-300 font-medium">Admin</span>
+                    </button>
+                </div>
+
+                <!-- Post Creator Box -->
+                <div class="bg-slate-900/90 border border-slate-700/80 p-3 space-y-2 mx-4 rounded-xl shadow-xl backdrop-blur-md">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-bold text-[10px] text-white shadow">EM</div>
+                        <input id="postInputText" type="text" placeholder="Broadcast to Blueworld NWO matrix..." class="flex-1 bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-cyan-500 transition">
+                    </div>
+                    <div class="flex justify-between items-center pt-1">
+                        <div class="flex space-x-3 text-slate-400 text-sm px-1">
+                            <button type="button" onclick="switchView('messagesView')" class="cursor-pointer hover:text-pink-400 transition" title="Open Messages"><i class="fa-solid fa-comments text-xs"></i></button>
+                            <button type="button" onclick="switchView('callingView')" class="cursor-pointer hover:text-emerald-400 transition" title="Start Video Call"><i class="fa-solid fa-video text-xs"></i></button>
+                            <button type="button" onclick="switchView('revenueView')" class="cursor-pointer hover:text-amber-400 transition" title="Revenue"><i class="fa-solid fa-wallet text-xs"></i></button>
+                        </div>
+                        <button type="button" onclick="publishPost()" class="px-4 py-1.5 bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 rounded-lg text-xs font-bold text-white shadow-lg transition cursor-pointer">Publish</button>
+                    </div>
+                </div>
+
+                <!-- Feed Stream -->
+                <div id="feedContainer" class="space-y-4 pb-6">
+                    <article class="bg-slate-900/80 border-y border-slate-800 pb-3 backdrop-blur-sm">
+                        <div class="flex items-center justify-between px-4 py-2.5 bg-slate-950/40 border-b border-slate-800/60">
+                            <div class="flex items-center space-x-2.5">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-pink-600 flex items-center justify-center font-bold text-xs text-white shadow">SM</div>
+                                <div>
+                                    <div class="flex items-center space-x-1">
+                                        <span class="text-xs font-bold text-slate-200">Sarah Miller</span>
+                                        <i class="fa-solid fa-circle-check text-cyan-400 text-[10px]"></i>
+                                    </div>
+                                    <p class="text-[9px] text-slate-400">2h ago • Orbit 9 Global Feed</p>
+                                </div>
+                            </div>
+                            <button type="button" class="text-slate-400 hover:text-slate-200 cursor-pointer"><i class="fa-solid fa-ellipsis"></i></button>
+                        </div>
+                        <div class="px-4 py-3 text-xs text-slate-200 leading-relaxed">
+                            Just tested the new multi-track AI video editor and banking treasury payout. Everything is running lightning fast! 🚀✨
+                        </div>
+                        <div class="px-4 py-2 flex justify-between items-center text-slate-400 text-xs border-t border-slate-800/60">
+                            <button type="button" onclick="this.classList.toggle('text-pink-400');" class="flex items-center space-x-1.5 hover:text-pink-400 transition cursor-pointer"><i class="fa-regular fa-heart"></i><span>412</span></button>
+                            <button type="button" onclick="switchView('messagesView')" class="flex items-center space-x-1.5 hover:text-cyan-400 transition cursor-pointer"><i class="fa-regular fa-comment"></i><span>58</span></button>
+                            <button type="button" class="flex items-center space-x-1.5 hover:text-emerald-400 transition cursor-pointer"><i class="fa-solid fa-share-nodes"></i><span>14</span></button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- VIEW 2: MESSAGING & CHATS (NEW FEATURE) -->
+            <div id="messagesView" class="view-section hidden p-4 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-400">
+                            <i class="fa-solid fa-comments text-xs"></i>
+                        </div>
+                        <h2 class="font-bold text-xs text-slate-200 tracking-wider">MESSAGING MATRIX</h2>
+                    </div>
+                    <button type="button" onclick="switchView('feedView')" class="text-[10px] px-2.5 py-1 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 hover:bg-slate-700 cursor-pointer">Back</button>
+                </div>
+                
+                <div class="space-y-2">
+                    <!-- Chat Item 1 -->
+                    <div onclick="openChat('Sarah Miller', 'Encrypted P2P Secure')" class="bg-slate-900/90 border border-slate-800 hover:border-pink-500/50 p-3 rounded-xl flex items-center space-x-3 transition cursor-pointer shadow-md">
+                        <div class="relative">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-600 to-pink-600 flex items-center justify-center font-bold text-xs text-white">SM</div>
+                            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold text-xs text-slate-200 truncate">Sarah Miller</h3>
+                                <span class="text-[9px] text-slate-500">12:42 PM</span>
+                            </div>
+                            <p class="text-[10px] text-pink-400 truncate">Completed benchmark validation on multi-track AI...</p>
+                        </div>
+                    </div>
+
+                    <!-- Chat Item 2 -->
+                    <div onclick="openChat('Blueworld Core Devs', '1,420 Active Nodes')" class="bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 p-3 rounded-xl flex items-center space-x-3 transition cursor-pointer shadow-md">
+                        <div class="relative">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-bold text-xs text-white"><i class="fa-solid fa-users"></i></div>
+                            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold text-xs text-slate-200 truncate">Blueworld Core Devs</h3>
+                                <span class="text-[9px] text-slate-500">11:15 AM</span>
+                            </div>
+                            <p class="text-[10px] text-cyan-400 truncate">Alex: New AI shader pipeline compiled successfully.</p>
+                        </div>
+                    </div>
+
+                    <!-- Chat Item 3 -->
+                    <div onclick="openChat('Treasury Node Alpha', 'Encrypted Financials')" class="bg-slate-900/90 border border-slate-800 hover:border-amber-500/50 p-3 rounded-xl flex items-center space-x-3 transition cursor-pointer shadow-md">
+                        <div class="relative">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center font-bold text-xs text-white"><i class="fa-solid fa-landmark"></i></div>
+                            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold text-xs text-slate-200 truncate">Treasury Node Alpha</h3>
+                                <span class="text-[9px] text-slate-500">Yesterday</span>
+                            </div>
+                            <p class="text-[10px] text-amber-400 truncate">Wire transfer of ,450.00 confirmed.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Chat Window Box -->
+                <div id="activeChatBox" class="hidden bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                        <div>
+                            <h4 id="chatTitle" class="font-bold text-xs text-slate-200">Chat</h4>
+                            <p id="chatSub" class="text-[9px] text-emerald-400">Online</p>
+                        </div>
+                        <button type="button" onclick="document.getElementById('activeChatBox').classList.add('hidden')" class="text-xs text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div id="chatMessages" class="space-y-2 h-32 overflow-y-auto text-[11px] pr-1">
+                        <div class="bg-slate-900 p-2 rounded-lg max-w-[80%]">Hello! Welcome to the secure chat channel.</div>
+                        <div class="bg-pink-950/60 border border-pink-500/30 p-2 rounded-lg max-w-[80%] ml-auto text-right">Everything is running smoothly!</div>
+                    </div>
+                    <div class="flex space-x-2 pt-1">
+                        <input id="chatInput" type="text" placeholder="Type encrypted message..." class="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-pink-500">
+                        <button type="button" onclick="sendChatMessage()" class="px-3 py-1.5 bg-pink-600 hover:bg-pink-500 text-white rounded-lg text-xs font-bold transition">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: BANKING & TREASURY -->
+            <div id="bankingView" class="view-section hidden p-4 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400">
+                            <i class="fa-solid fa-landmark text-xs"></i>
+                        </div>
+                        <h2 class="font-bold text-xs text-slate-200 tracking-wider">TREASURY VAULT</h2>
+                    </div>
+                    <button type="button" onclick="switchView('feedView')" class="text-[10px] px-2.5 py-1 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 hover:bg-slate-700 cursor-pointer">Back</button>
+                </div>
+                <div class="p-5 bg-gradient-to-br from-amber-950/40 via-slate-900 to-slate-900 border border-amber-500/40 rounded-2xl space-y-3 shadow-xl">
+                    <p class="text-[10px] text-amber-400 uppercase tracking-widest font-semibold">Available Sovereign Reserve</p>
+                    <p class="text-2xl font-black text-white">,450.00 <span class="text-xs font-normal text-amber-300/80">USD-T</span></p>
+                    <div class="flex space-x-2 pt-2">
+                        <button type="button" onclick="alert('Wire transfer protocol executed successfully.')" class="flex-1 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs transition cursor-pointer shadow-lg">Transfer</button>
+                        <button type="button" onclick="alert('Vault deposit gateway ready.')" class="flex-1 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 rounded-xl text-xs transition cursor-pointer">Deposit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 4: WEBRTC CALLING -->
+            <div id="callingView" class="view-section hidden p-4 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                            <i class="fa-solid fa-video text-xs"></i>
+                        </div>
+                        <h2 class="font-bold text-xs text-slate-200 tracking-wider">VIDEO CONFERENCE RELAY</h2>
+                    </div>
+                    <button type="button" onclick="switchView('feedView')" class="text-[10px] px-2.5 py-1 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 hover:bg-slate-700 cursor-pointer">Back</button>
+                </div>
+                <div class="bg-gradient-to-br from-emerald-950/40 to-slate-900 border border-emerald-500/40 p-5 rounded-2xl space-y-3 text-xs shadow-xl">
+                    <p class="font-bold text-slate-200 text-sm">Orbit 9 Command Channel</p>
+                    <p class="text-[11px] text-emerald-300/80">Encrypted peer-to-peer audio & video conferencing node ready.</p>
+                    <button type="button" onclick="alert('Connected to secure WebRTC video room.')" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl transition cursor-pointer shadow-lg">Join Video Room</button>
+                </div>
+            </div>
+
+            <!-- VIEW 5: GROUPS & COMMUNITIES -->
+            <div id="communitiesView" class="view-section hidden p-4 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400">
+                            <i class="fa-solid fa-users-rectangle text-xs"></i>
+                        </div>
+                        <h2 class="font-bold text-xs text-slate-200 tracking-wider">ENGINEERING GROUPS</h2>
+                    </div>
+                    <button type="button" onclick="switchView('feedView')" class="text-[10px] px-2.5 py-1 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 hover:bg-slate-700 cursor-pointer">Back</button>
+                </div>
+                <div class="bg-slate-900 border border-cyan-500/30 p-4 rounded-xl flex justify-between items-center text-xs shadow-lg">
+                    <div>
+                        <p class="font-bold text-slate-200">Blueworld Core Architects</p>
+                        <p class="text-[10px] text-cyan-400">1,420 Active Nodes</p>
+                    </div>
+                    <button type="button" onclick="switchView('messagesView')" class="px-3.5 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-lg transition cursor-pointer">Open Chat</button>
+                </div>
+            </div>
+
+            <!-- VIEW 6: REVENUE PRO -->
+            <div id="revenueView" class="view-section hidden p-4 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                            <i class="fa-solid fa-wallet text-xs"></i>
+                        </div>
+                        <h2 class="font-bold text-xs text-slate-200 tracking-wider">SUBSCRIPTION & LICENSING</h2>
+                    </div>
+                    <button type="button" onclick="switchView('feedView')" class="text-[10px] px-2.5 py-1 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 hover:bg-slate-700 cursor-pointer">Back</button>
+                </div>
+                <div class="bg-gradient-to-br from-indigo-950/60 to-slate-900 border border-indigo-500/40 p-5 rounded-2xl flex justify-between items-center text-xs shadow-xl">
+                    <div>
+                        <p class="font-bold text-white text-sm">Enterprise Lifetime Pass</p>
+                        <p class="text-[10px] text-indigo-300">Full developer & AI studio authorization</p>
+                    </div>
+                    <button type="button" onclick="alert('Processing secure enterprise license checkout...')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl transition cursor-pointer shadow-lg"> / Seat</button>
+                </div>
+            </div>
+
+            <!-- VIEW 7: MOVIES -->
+            <div id="moviesView" class="view-section hidden p-4 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-400">
+                            <i class="fa-solid fa-film text-xs"></i>
+                        </div>
+                        <h2 class="font-bold text-xs text-slate-200 tracking-wider">MEDIA ARCHIVE</h2>
+                    </div>
+                    <button type="button" onclick="switchView('feedView')" class="text-[10px] px-2.5 py-1 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 hover:bg-slate-700 cursor-pointer">Back</button>
+                </div>
+                <div class="bg-slate-900 border border-rose-500/30 p-4 rounded-xl space-y-2 text-xs shadow-lg">
+                    <p class="font-bold text-slate-200">Blueworld Architectural Reel 4K</p>
+                    <p class="text-[10px] text-rose-400">High-bitrate system showcase and demonstration asset.</p>
+                    <button type="button" onclick="alert('Streaming media asset...')" class="w-full py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-lg transition cursor-pointer">Play Stream</button>
+                </div>
+            </div>
+
+            <!-- VIEW 8: MUSIC -->
+            <div id="musicView" class="view-section hidden p-4 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-lg bg-violet-500/20 flex items-center justify-center text-violet-400">
+                            <i class="fa-solid fa-music text-xs"></i>
+                        </div>
+                        <h2 class="font-bold text-xs text-slate-200 tracking-wider">AUDIO SYNTHESIS</h2>
+                    </div>
+                    <button type="button" onclick="switchView('feedView')" class="text-[10px] px-2.5 py-1 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 hover:bg-slate-700 cursor-pointer">Back</button>
+                </div>
+                <div class="bg-slate-900 border border-violet-500/30 p-4 rounded-xl flex justify-between items-center text-xs shadow-lg">
+                    <div>
+                        <p class="font-bold text-slate-200">System Soundscape v4</p>
+                        <p class="text-[10px] text-violet-400">Ambient developer audio feed</p>
+                    </div>
+                    <button type="button" onclick="alert('Playing audio stream.')" class="px-3.5 py-1.5 bg-violet-600 hover:bg-violet-500 text-white font-bold rounded-lg transition cursor-pointer">Play</button>
+                </div>
+            </div>
+
+            <!-- VIEW 9: ADMIN -->
+            <div id="adminView" class="view-section hidden p-4 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-7 h-7 rounded-lg bg-fuchsia-500/20 flex items-center justify-center text-fuchsia-400">
+                            <i class="fa-solid fa-shield-cat text-xs"></i>
+                        </div>
+                        <h2 class="font-bold text-xs text-slate-200 tracking-wider">ADMIN CONSOLE</h2>
+                    </div>
+                    <button type="button" onclick="switchView('feedView')" class="text-[10px] px-2.5 py-1 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 hover:bg-slate-700 cursor-pointer">Back</button>
+                </div>
+                <div class="p-4 bg-slate-900 border border-fuchsia-500/30 rounded-xl text-xs space-y-2 shadow-lg">
+                    <p class="font-bold text-slate-200">Cluster Status: <span class="text-emerald-400">OPERATIONAL</span></p>
+                    <p class="text-[10px] text-slate-400">All WebRTC relays, encryption channels, and AI pipelines active.</p>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Bottom Master Navigation Bar -->
+        <nav class="absolute bottom-0 left-0 right-0 bg-[#090d16]/90 backdrop-blur-xl border-t border-slate-800 py-3 px-5 flex justify-between items-center text-slate-400 z-40 shadow-2xl">
+            <button type="button" onclick="switchView('feedView')" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-800/80 border border-slate-700 text-cyan-400 hover:text-white transition cursor-pointer" title="Home Feed"><i class="fa-solid fa-house text-xs"></i></button>
+            <button type="button" onclick="switchView('messagesView')" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-800/80 border border-slate-700 text-pink-400 hover:text-white transition cursor-pointer relative" title="Messages"><i class="fa-solid fa-comments text-xs"></i><span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-pink-500 animate-pulse"></span></button>
+            <button type="button" onclick="switchView('callingView')" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-800/80 border border-slate-700 text-emerald-400 hover:text-white transition cursor-pointer" title="Calling"><i class="fa-solid fa-video text-xs"></i></button>
+            <button type="button" onclick="switchView('communitiesView')" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-800/80 border border-slate-700 text-cyan-300 hover:text-white transition cursor-pointer" title="Groups"><i class="fa-solid fa-users-rectangle text-xs"></i></button>
+            <button type="button" onclick="switchView('bankingView')" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-800/80 border border-slate-700 text-amber-400 hover:text-white transition cursor-pointer" title="Banking"><i class="fa-solid fa-landmark text-xs"></i></button>
+            <button type="button" onclick="switchView('revenueView')" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-800/80 border border-slate-700 text-indigo-400 hover:text-white transition cursor-pointer" title="Revenue"><i class="fa-solid fa-wallet text-xs"></i></button>
+            <button type="button" onclick="switchView('adminView')" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-800/80 border border-slate-700 text-purple-400 hover:text-white transition cursor-pointer" title="Admin"><i class="fa-solid fa-shield-halved text-xs"></i></button>
+        </nav>
+
+        <script>
+            function switchView(viewId) {
+                const views = document.querySelectorAll('.view-section');
+                views.forEach(v => v.classList.add('hidden'));
+                const target = document.getElementById(viewId);
+                if(target) {
+                    target.classList.remove('hidden');
+                    const mainContainer = document.querySelector('main');
+                    if(mainContainer) mainContainer.scrollTop = 0;
+                }
+            }
+
+            function openChat(name, subtitle) {
+                const box = document.getElementById('activeChatBox');
+                const title = document.getElementById('chatTitle');
+                const sub = document.getElementById('chatSub');
+                title.innerText = name;
+                sub.innerText = subtitle;
+                box.classList.remove('hidden');
+                box.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            function sendChatMessage() {
+                const input = document.getElementById('chatInput');
+                const container = document.getElementById('chatMessages');
+                if(!input || !input.value.trim()) return;
+                
+                const msg = document.createElement('div');
+                msg.className = 'bg-pink-950/60 border border-pink-500/30 p-2 rounded-lg max-w-[80%] ml-auto text-right text-slate-100';
+                msg.innerText = input.value;
+                container.appendChild(msg);
+                input.value = '';
+                container.scrollTop = container.scrollHeight;
+            }
+
+            function publishPost() {
+                const input = document.getElementById('postInputText');
+                if(!input) return;
+                const text = input.value.trim();
+                if(!text) { alert('Please enter post text.'); return; }
+                
+                const feed = document.getElementById('feedContainer');
+                const newPost = document.createElement('article');
+                newPost.className = 'bg-slate-900/80 border-y border-slate-800 pb-3 backdrop-blur-sm';
+                newPost.innerHTML = \
+                    <div class="flex items-center justify-between px-4 py-2.5 bg-slate-950/40 border-b border-slate-800/60">
+                        <div class="flex items-center space-x-2.5">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-bold text-xs text-white">EM</div>
+                            <div>
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-xs font-bold text-slate-200">Elisha Makoi</span>
+                                    <i class="fa-solid fa-circle-check text-cyan-400 text-[10px]"></i>
+                                </div>
+                                <p class="text-[9px] text-slate-400">Just Now • Orbit 9 Feed</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-4 py-3 text-xs text-slate-200 leading-relaxed">\</div>
+                \;
+                feed.prepend(newPost);
+                input.value = '';
+            }
+        </script>
+    </div>
+</body>
+</html>

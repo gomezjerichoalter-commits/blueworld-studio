@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueworld NWO - Command Center (Restricted)</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-[#020408] text-slate-200 font-mono p-6 min-h-screen flex justify-center items-center">
+    <div class="w-full max-w-lg bg-[#0d1117] border border-red-500/40 rounded-2xl p-6 shadow-2xl space-y-5">
+        <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+            <div class="w-9 h-9 rounded-xl bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400">
+                <i class="fa-solid fa-shield-halved text-base"></i>
+            </div>
+            <div>
+                <h1 class="font-black text-sm text-white tracking-wider">COMMAND CENTER</h1>
+                <p class="text-[10px] text-red-400">Restricted Sovereign Operator Access Only</p>
+            </div>
+        </div>
+
+        <div class="space-y-3 text-xs">
+            <div>
+                <label class="block text-slate-400 text-[10px] mb-1">MASTER DEVELOPER KEY</label>
+                <input id="masterKeyInput" type="password" placeholder="Enter secret authorization key..." class="w-full bg-[#161b22] border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:outline-none focus:border-red-500">
+            </div>
+            <div>
+                <label class="block text-slate-400 text-[10px] mb-1">GLOBAL SYSTEM STATUS OVERRIDE</label>
+                <select id="statusSelect" class="w-full bg-[#161b22] border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:outline-none focus:border-red-500">
+                    <option value="OPERATIONAL">OPERATIONAL</option>
+                    <option value="MAINTENANCE">MAINTENANCE</option>
+                    <option value="LOCKDOWN">LOCKDOWN</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-slate-400 text-[10px] mb-1">BROADCAST GLOBAL ANNOUNCEMENT TO ALL CLIENTS</label>
+                <input id="announcementInput" type="text" value="Blueworld NWO v2.5 live." class="w-full bg-[#161b22] border border-slate-700 rounded-lg p-2.5 text-slate-100 focus:outline-none focus:border-red-500">
+            </div>
+            <button onclick="pushOverride()" class="w-full py-3 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl transition cursor-pointer shadow-lg">Execute Master Override</button>
+            <p id="responseLog" class="text-[10px] text-center text-slate-400 pt-2"></p>
+        </div>
+    </div>
+
+    <script>
+        async function pushOverride() {
+            const masterKey = document.getElementById('masterKeyInput').value;
+            const newStatus = document.getElementById('statusSelect').value;
+            const newAnnouncement = document.getElementById('announcementInput').value;
+            const log = document.getElementById('responseLog');
+
+            try {
+                const res = await fetch('http://localhost:5000/api/admin/override', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ masterKey, newStatus, newAnnouncement })
+                });
+                const data = await res.json();
+                if(data.success) {
+                    log.className = "text-[10px] text-center text-emerald-400 pt-2 font-bold";
+                    log.innerText = "Success: Global state updated across all client apps.";
+                } else {
+                    log.className = "text-[10px] text-center text-red-400 pt-2 font-bold";
+                    log.innerText = "Error: " + data.error;
+                }
+            } catch(e) {
+                log.className = "text-[10px] text-center text-red-400 pt-2 font-bold";
+                log.innerText = "Failed to connect to Master Backend server.";
+            }
+        }
+    </script>
+</body>
+</html>

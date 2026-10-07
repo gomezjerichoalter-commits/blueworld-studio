@@ -1,0 +1,751 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>blueWORLD.NWO - Global AI Creator Studio & Social OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        body { background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif; color: #f8fafc; }
+        .glass-panel { background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-input { background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; }
+        .glass-input:focus { border-color: #6366f1; outline: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="min-h-screen selection:bg-indigo-500 selection:text-white">
+
+    <!-- Global Top Command Header -->
+    <header class="glass-panel fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-3 lg:px-6 border-b border-slate-800">
+        <!-- Logo & Global Search -->
+        <div class="flex items-center space-x-2.5">
+            <div onclick="switchModule('feed')" class="bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 text-white font-black text-lg px-3 py-1.5 rounded-xl tracking-wider cursor-pointer hover:opacity-90 transition shadow-lg shadow-indigo-500/20" title="blueWORLD.NWO Studio">bW</div>
+            <div class="relative hidden sm:block">
+                <i class="fas fa-search absolute left-3 top-3 text-slate-400 text-xs"></i>
+                <input type="text" placeholder="Search feeds, AI scripts..." class="glass-input rounded-full pl-9 pr-3 py-1.5 text-xs w-36 lg:w-48 transition">
+            </div>
+        </div>
+
+        <!-- Center Studio Hub Tabs (Optimized Spacing for Full Visibility) -->
+        <div class="flex items-center space-x-0.5 h-full overflow-x-auto no-scrollbar px-1">
+            <button onclick="switchModule('feed')" id="nav-feed" class="h-full px-2.5 border-b-2 border-indigo-500 text-indigo-400 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap" title="Social Feed & Stories">
+                <i class="fas fa-stream text-xs"></i><span>Feed</span>
+            </button>
+            <button onclick="switchModule('profile')" id="nav-profile" class="h-full px-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap" title="Creator Profile">
+                <i class="fas fa-fingerprint text-xs"></i><span>Profile</span>
+            </button>
+            <button onclick="switchModule('communities')" id="nav-communities" class="h-full px-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap" title="Hubs & Groups">
+                <i class="fas fa-globe text-xs"></i><span>Hubs</span>
+            </button>
+            <button onclick="switchModule('messaging')" id="nav-messaging" class="h-full px-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap" title="Messenger & Chats">
+                <i class="fas fa-comments text-xs"></i><span>Messenger</span>
+            </button>
+            <button onclick="switchModule('suites')" id="nav-suites" class="h-full px-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap" title="Canva & CapCut Suites">
+                <i class="fas fa-wand-magic-sparkles text-xs text-purple-400"></i><span>Suites</span>
+            </button>
+            <button onclick="switchModule('ai')" id="nav-ai" class="h-full px-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap" title="Heavy AI Editing">
+                <i class="fas fa-brain text-xs text-emerald-400"></i><span>AI Core</span>
+            </button>
+            <button onclick="switchModule('entertainment')" id="nav-entertainment" class="h-full px-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap" title="Movies & Music">
+                <i class="fas fa-photo-film text-xs text-pink-400"></i><span>Media</span>
+            </button>
+            <button onclick="switchModule('calling')" id="nav-calling" class="h-full px-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap" title="Voice & Video Calls">
+                <i class="fas fa-phone-volume text-xs text-teal-400"></i><span>Calls</span>
+            </button>
+            <button onclick="switchModule('wallet')" id="nav-wallet" class="h-full px-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap" title="I&M Vault & Tiers">
+                <i class="fas fa-vault text-xs text-amber-400"></i><span>Vault</span>
+            </button>
+        </div>
+
+        <!-- Right Utilities & Global Status -->
+        <div class="flex items-center space-x-2">
+            <div class="hidden xl:flex items-center space-x-1.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-full text-[10px] font-medium">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Live</span>
+            </div>
+            <div onclick="switchModule('profile')" class="flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 cursor-pointer p-1 rounded-full transition border border-slate-700">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-6 h-6 rounded-full object-cover">
+                <span class="text-xs font-bold pr-2 hidden md:inline text-slate-200">Elisha</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Global Workspace Grid -->
+    <div class="pt-20 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto px-4 pb-12">
+        
+        <!-- Left Navigation Sidebar -->
+        <aside class="hidden md:block md:col-span-1 lg:col-span-1 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto no-scrollbar space-y-1.5 pr-1">
+            <div onclick="switchModule('profile')" class="glass-panel p-3 rounded-2xl mb-3 cursor-pointer hover:border-indigo-500/50 transition group">
+                <div class="flex items-center space-x-3">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-9 h-9 rounded-xl object-cover ring-2 ring-indigo-500/30">
+                    <div class="overflow-hidden">
+                        <h4 class="font-bold text-xs text-slate-100 truncate group-hover:text-indigo-400 transition">Elisha Makoi</h4>
+                        <p class="text-[10px] text-emerald-400 font-medium">● 1.4K Followers</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-1">Social & Community</div>
+            <div onclick="switchModule('feed')" class="flex items-center space-x-3 px-3 py-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition text-slate-300 text-xs font-medium">
+                <i class="fas fa-stream text-indigo-400 w-4"></i><span>News Feed & Stories</span>
+            </div>
+            <div onclick="switchModule('profile')" class="flex items-center space-x-3 px-3 py-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition text-slate-300 text-xs font-medium">
+                <i class="fas fa-fingerprint text-sky-400 w-4"></i><span>My Profile & Reels</span>
+            </div>
+            <div onclick="switchModule('communities')" class="flex items-center space-x-3 px-3 py-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition text-slate-300 text-xs font-medium">
+                <i class="fas fa-globe text-orange-400 w-4"></i><span>Hubs & Creator Groups</span>
+            </div>
+            <div onclick="switchModule('messaging')" class="flex items-center space-x-3 px-3 py-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition text-slate-300 text-xs font-medium">
+                <i class="fas fa-comments text-blue-400 w-4"></i><span>Messenger & Chats</span>
+            </div>
+
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mt-3 mb-1">Advanced Studios</div>
+            <div onclick="switchModule('suites')" class="flex items-center space-x-3 px-3 py-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition text-slate-300 text-xs font-medium">
+                <i class="fas fa-wand-magic-sparkles text-purple-400 w-4"></i><span>Canva & CapCut Suites</span>
+            </div>
+            <div onclick="switchModule('ai')" class="flex items-center space-x-3 px-3 py-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition text-slate-300 text-xs font-medium">
+                <i class="fas fa-brain text-emerald-400 w-4"></i><span>Heavy AI Editing Core</span>
+            </div>
+            <div onclick="switchModule('entertainment')" class="flex items-center space-x-3 px-3 py-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition text-slate-300 text-xs font-medium">
+                <i class="fas fa-photo-film text-pink-400 w-4"></i><span>Movies & Music Library</span>
+            </div>
+            <div onclick="switchModule('calling')" class="flex items-center space-x-3 px-3 py-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition text-slate-300 text-xs font-medium">
+                <i class="fas fa-phone-volume text-teal-400 w-4"></i><span>Voice & Video Calls</span>
+            </div>
+            <div onclick="switchModule('wallet')" class="flex items-center space-x-3 px-3 py-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition text-slate-300 text-xs font-medium">
+                <i class="fas fa-vault text-amber-400 w-4"></i><span>I&M Bank Vault Tiers</span>
+            </div>
+            <div onclick="switchModule('security')" class="flex items-center space-x-3 px-3 py-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition text-slate-300 text-xs font-medium">
+                <i class="fas fa-shield-halved text-rose-400 w-4"></i><span>Security & Fraud Audit</span>
+            </div>
+        </aside>
+
+        <!-- Central Dynamic Viewport -->
+        <main id="center-viewport" class="col-span-1 md:col-span-3 lg:col-span-3 space-y-6 max-w-2xl mx-auto w-full">
+            <!-- Dynamically injected view content -->
+        </main>
+
+        <!-- Right Live Pipelines & Active Contacts Sidebar -->
+        <aside class="hidden lg:block lg:col-span-1 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto no-scrollbar space-y-4 pl-1">
+            <!-- Global Social Pipelines -->
+            <div class="glass-panel p-4 rounded-2xl space-y-3">
+                <h4 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Global Pipelines</h4>
+                <div class="space-y-2">
+                    <div onclick="openConnector('Facebook Graph API', 'Connected & syncing live feeds & reels globally.')" class="flex items-center space-x-3 p-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?w=100&h=100&fit=crop" class="w-7 h-7 rounded-lg object-cover">
+                            <span class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                        </div>
+                        <span class="text-xs font-semibold text-slate-300">Facebook API</span>
+                    </div>
+                    <div onclick="openConnector('Instagram Graph API', 'Reels & stories global sync active.')" class="flex items-center space-x-3 p-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop" class="w-7 h-7 rounded-lg object-cover">
+                            <span class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                        </div>
+                        <span class="text-xs font-semibold text-slate-300">Instagram API</span>
+                    </div>
+                    <div onclick="openConnector('TikTok Creator Studio', 'Auto-uploader & script sync live.')" class="flex items-center space-x-3 p-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=100&h=100&fit=crop" class="w-7 h-7 rounded-lg object-cover">
+                            <span class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                        </div>
+                        <span class="text-xs font-semibold text-slate-300">TikTok Studio</span>
+                    </div>
+                    <div onclick="openConnector('WhatsApp Business Bot', 'Gateway active on port 5000.')" class="flex items-center space-x-3 p-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=100&h=100&fit=crop" class="w-7 h-7 rounded-lg object-cover">
+                            <span class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                        </div>
+                        <span class="text-xs font-semibold text-slate-300">WhatsApp Gateway</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Contacts -->
+            <div class="glass-panel p-4 rounded-2xl space-y-3">
+                <h4 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Active Contacts</h4>
+                <div class="space-y-2">
+                    <div onclick="viewUserProfile('Sarah Developer', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop', '1,890 Followers', 'Full-Stack Developer & UI Designer 🎨')" class="flex items-center space-x-3 p-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" class="w-7 h-7 rounded-full object-cover">
+                            <span class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                        </div>
+                        <span class="text-xs font-semibold text-slate-300">Sarah Developer</span>
+                    </div>
+                    <div onclick="viewUserProfile('Alex NWO Lead', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop', '2,150 Followers', 'Global AI Systems Lead 🚀')" class="flex items-center space-x-3 p-2 hover:bg-slate-800/60 rounded-xl cursor-pointer transition">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" class="w-7 h-7 rounded-lg object-cover">
+                            <span class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                        </div>
+                        <span class="text-xs font-semibold text-slate-300">Alex NWO Lead</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Interactive Status Modal -->
+    <div id="feature-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-700">
+            <h3 id="modal-title" class="text-lg font-bold text-slate-100">Module Status</h3>
+            <p id="modal-desc" class="text-xs text-slate-300 font-mono bg-slate-900/80 p-4 rounded-xl border border-slate-800"></p>
+            <div class="flex justify-end">
+                <button onclick="closeModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl text-xs font-semibold transition shadow-lg shadow-indigo-500/20">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchModule(module) {
+            ['feed', 'profile', 'communities', 'messaging', 'suites', 'ai', 'entertainment', 'calling', 'wallet', 'security'].forEach(m => {
+                const btn = document.getElementById('nav-' + m);
+                if(btn) {
+                    if(m === module) {
+                        btn.className = 'h-full px-2.5 border-b-2 border-indigo-500 text-indigo-400 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap';
+                    } else {
+                        btn.className = 'h-full px-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 flex items-center justify-center transition text-[11px] font-semibold space-x-1 whitespace-nowrap';
+                    }
+                }
+            });
+
+            const viewport = document.getElementById('center-viewport');
+            
+            if(module === 'feed') {
+                viewport.innerHTML = `
+                    <div class="grid grid-cols-4 gap-2">
+                        <div class="glass-panel rounded-2xl h-36 p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer group border border-slate-800" onclick="switchModule('profile')">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=300&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition opacity-70">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                            <div></div>
+                            <span class="text-[11px] font-bold text-white relative z-10 truncate hover:text-indigo-400 transition">Create Story</span>
+                        </div>
+                        <div class="glass-panel rounded-2xl h-36 p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer group border border-slate-800" onclick="viewUserProfile('Sarah Developer', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop', '1,890 Followers', 'Full-Stack Developer & UI Designer 🎨')">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=300&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                            <div></div>
+                            <span class="text-[11px] font-bold text-white relative z-10 truncate hover:text-indigo-400 transition">Sarah Dev</span>
+                        </div>
+                        <div class="glass-panel rounded-2xl h-36 p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer group border border-slate-800" onclick="viewUserProfile('Alex NWO Lead', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop', '2,150 Followers', 'Global AI Systems Lead 🚀')">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=300&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                            <div></div>
+                            <span class="text-[11px] font-bold text-white relative z-10 truncate hover:text-indigo-400 transition">Alex NWO</span>
+                        </div>
+                        <div class="glass-panel rounded-2xl h-36 p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer group border border-slate-800" onclick="alert('Viewing AI Studio Reel.')">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&h=300&fit=crop" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition opacity-80">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                            <div></div>
+                            <span class="text-[11px] font-bold text-white relative z-10 truncate">AI Studio Reel</span>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-3xl p-5 space-y-4 shadow-xl border border-slate-800">
+                        <div class="flex items-center space-x-3">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-10 h-10 rounded-2xl object-cover cursor-pointer ring-2 ring-indigo-500/30 hover:opacity-90 transition" onclick="switchModule('profile')">
+                            <input type="text" id="post-input" placeholder="What's on your mind, Elisha?" class="glass-input rounded-2xl px-4 py-3 w-full text-sm transition">
+                        </div>
+                        <div class="flex items-center justify-between pt-1 border-t border-slate-800/60">
+                            <button onclick="createPost('video')" class="flex items-center space-x-2 text-rose-400 hover:bg-rose-500/10 px-3 py-2 rounded-xl text-xs font-semibold transition">
+                                <i class="fas fa-video"></i><span>Live Video</span>
+                            </button>
+                            <button onclick="createPost('photo')" class="flex items-center space-x-2 text-emerald-400 hover:bg-emerald-500/10 px-3 py-2 rounded-xl text-xs font-semibold transition">
+                                <i class="fas fa-images"></i><span>Photo/Video</span>
+                            </button>
+                            <button onclick="createPost('ai')" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white px-5 py-2 rounded-xl text-xs font-semibold shadow-lg shadow-indigo-500/20 transition">
+                                Post AI Update
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="feed-stream" class="space-y-4">
+                        <div class="glass-panel rounded-3xl p-5 space-y-4 shadow-xl border border-slate-800">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchModule('profile')">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-10 h-10 rounded-2xl object-cover ring-2 ring-indigo-500/30 group-hover:scale-105 transition">
+                                    <div>
+                                        <h4 class="font-bold text-sm text-slate-100 group-hover:text-indigo-400 transition">blueWORLD.NWO Studio</h4>
+                                        <p class="text-[11px] text-slate-400">Just now · <i class="fas fa-globe"></i></p>
+                                    </div>
+                                </div>
+                                <button class="text-slate-400 hover:text-slate-200"><i class="fas fa-ellipsis"></i></button>
+                            </div>
+                            <p class="text-sm text-slate-200 leading-relaxed">🚀 Autonomous AI agent script generator & edge cache fully operational in global markets! All Facebook features + Canva/CapCut suites, I&M Vault, and Calling active.</p>
+                            <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-800">
+                                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=300&fit=crop" class="w-full object-cover max-h-72">
+                            </div>
+                            <div class="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-800/60 pb-2">
+                                <span>👍 ❤ 142 Likes</span>
+                                <span>38 Comments · 19 Shares</span>
+                            </div>
+                            <div class="grid grid-cols-3 text-center text-slate-300 font-semibold text-xs">
+                                <button onclick="toggleLike(this)" class="hover:bg-slate-800/60 py-2.5 rounded-xl transition flex items-center justify-center space-x-2">
+                                    <i class="far fa-thumbs-up"></i><span>Like</span>
+                                </button>
+                                <button onclick="alert('Comment drawer opened.')" class="hover:bg-slate-800/60 py-2.5 rounded-xl transition flex items-center justify-center space-x-2">
+                                    <i class="far fa-comment"></i><span>Comment</span>
+                                </button>
+                                <button onclick="alert('Post shared globally.')" class="hover:bg-slate-800/60 py-2.5 rounded-xl transition flex items-center justify-center space-x-2">
+                                    <i class="far fa-share-square"></i><span>Share</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if(module === 'profile') {
+                viewport.innerHTML = `
+                    <div class="glass-panel rounded-3xl shadow-xl overflow-hidden space-y-4 border border-slate-800">
+                        <div class="relative bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 h-48">
+                            <div class="absolute -bottom-10 left-6 flex items-end space-x-4">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop" class="w-32 h-32 rounded-3xl border-4 border-slate-900 object-cover shadow-2xl bg-slate-900">
+                            </div>
+                        </div>
+                        <div class="pt-12 px-6 pb-4 flex flex-col md:flex-row md:items-center md:justify-between border-b border-slate-800 space-y-3 md:space-y-0">
+                            <div>
+                                <h1 class="text-2xl font-black text-slate-100">Elisha Makoi Kutata</h1>
+                                <p class="text-xs text-slate-400 mt-0.5">Full-Stack Developer & AI Studio Creator 🚀 | blueWORLD.NWO Founder</p>
+                                <div class="flex space-x-6 mt-3 text-xs">
+                                    <div><span class="font-bold text-slate-100">1,420</span> <span class="text-slate-400">Followers</span></div>
+                                    <div><span class="font-bold text-slate-100">380</span> <span class="text-slate-400">Following</span></div>
+                                    <div><span class="font-bold text-slate-100">84</span> <span class="text-slate-400">Posts</span></div>
+                                    <div><span class="font-bold text-slate-100">1.2K</span> <span class="text-slate-400">Likes</span></div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button onclick="alert('Profile settings opened.')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl font-semibold text-xs transition border border-slate-700">Edit Profile</button>
+                                <button onclick="switchModule('messaging')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl font-semibold text-xs transition shadow-lg shadow-indigo-500/20">Message</button>
+                            </div>
+                        </div>
+
+                        <div class="flex border-b border-slate-800 px-6 space-x-6 text-xs font-semibold text-slate-400">
+                            <button onclick="switchProfileTab('posts')" id="ptab-posts" class="pb-3 border-b-2 border-indigo-500 text-indigo-400">Posts</button>
+                            <button onclick="switchProfileTab('photos')" id="ptab-photos" class="pb-3 border-b-2 border-transparent hover:text-slate-200">Photos (32)</button>
+                            <button onclick="switchProfileTab('videos')" id="ptab-videos" class="pb-3 border-b-2 border-transparent hover:text-slate-200">Videos & Reels (18)</button>
+                            <button onclick="switchProfileTab('likes')" id="ptab-likes" class="pb-3 border-b-2 border-transparent hover:text-slate-200">Likes (1.2K)</button>
+                        </div>
+
+                        <div id="profile-tab-content" class="p-6 space-y-4">
+                            <div class="glass-panel rounded-2xl border border-slate-800 p-4 space-y-3">
+                                <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchModule('profile')">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-10 h-10 rounded-xl object-cover">
+                                    <div><h4 class="font-bold text-xs text-slate-100 group-hover:text-indigo-400">Elisha Makoi</h4><p class="text-[11px] text-slate-400">2 hours ago · Public</p></div>
+                                </div>
+                                <p class="text-sm text-slate-200">Deploying Next.js full-stack apps with global edge-cache routers and Python AI backends!</p>
+                                <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-800">
+                                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=250&fit=crop" class="w-full object-cover max-h-60">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if(module === 'communities') {
+                viewport.innerHTML = `
+                    <div class="glass-panel rounded-3xl p-6 space-y-5 border border-slate-800 shadow-xl">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-400 flex items-center justify-center text-xl font-bold border border-orange-500/20">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-base text-slate-100">Hubs & Creator Groups</h2>
+                                    <p class="text-xs text-slate-400">Collaborate & build with global creators</p>
+                                </div>
+                            </div>
+                            <button onclick="alert('Create Group modal opened.')" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl text-xs font-semibold transition shadow-lg shadow-orange-500/20">+ Create Hub</button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-slate-900/60 p-4 rounded-2xl space-y-3 border border-slate-800">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop" class="w-10 h-10 rounded-xl object-cover">
+                                    <div><h4 class="font-bold text-xs text-slate-100">Global AI Creators Hub</h4><p class="text-[11px] text-slate-400">1,420 members</p></div>
+                                </div>
+                                <p class="text-xs text-slate-300">Sharing cutting-edge AI video generation workflows and scripts worldwide.</p>
+                                <button onclick="alert('Joined Global AI Creators Hub!')" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-xl text-xs font-semibold transition">Join Hub</button>
+                            </div>
+                            <div class="bg-slate-900/60 p-4 rounded-2xl space-y-3 border border-slate-800">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=100&h=100&fit=crop" class="w-10 h-10 rounded-xl object-cover">
+                                    <div><h4 class="font-bold text-xs text-slate-100">Next.js & React Builders</h4><p class="text-[11px] text-slate-400">890 members</p></div>
+                                </div>
+                                <p class="text-xs text-slate-300">Discussing TypeScript, Tailwind CSS, and high-performance server routes.</p>
+                                <button onclick="alert('Joined Next.js Builders!')" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-xl text-xs font-semibold transition">Join Hub</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if(module === 'messaging') {
+                viewport.innerHTML = `
+                    <div class="glass-panel rounded-3xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-3 h-[600px] border border-slate-800">
+                        <div class="border-r border-slate-800 flex flex-col h-full bg-slate-900/40">
+                            <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                                <h3 class="font-bold text-sm text-slate-100">Messenger</h3>
+                                <button class="text-indigo-400 hover:bg-indigo-500/10 p-2 rounded-xl transition"><i class="fas fa-pen-to-square"></i></button>
+                            </div>
+                            <div class="p-2 space-y-1 overflow-y-auto flex-1">
+                                <div onclick="selectChat('Global AI Team', 'Edge cache deployed globally.')" class="flex items-center space-x-3 p-3 hover:bg-slate-800/60 rounded-2xl cursor-pointer transition bg-slate-800/80">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-9 h-9 rounded-xl object-cover">
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between"><h4 class="font-bold text-xs text-slate-100 truncate">Global AI Team</h4><span class="text-[10px] text-slate-400">10m</span></div>
+                                        <p class="text-[11px] text-slate-400 truncate">Edge cache deployed globally.</p>
+                                    </div>
+                                </div>
+                                <div onclick="selectChat('Sarah Developer', 'Ready for Next.js review.')" class="flex items-center space-x-3 p-3 hover:bg-slate-800/60 rounded-2xl cursor-pointer transition">
+                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" class="w-9 h-9 rounded-xl object-cover">
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between"><h4 class="font-bold text-xs text-slate-100 truncate">Sarah Developer</h4><span class="text-[10px] text-slate-400">1h</span></div>
+                                        <p class="text-[11px] text-slate-400 truncate">Ready for Next.js review.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-2 flex flex-col h-full bg-slate-900/20">
+                            <div id="chat-header" class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/60">
+                                <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchModule('profile')">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-8 h-8 rounded-xl object-cover">
+                                    <div><h4 id="active-chat-name" class="font-bold text-xs text-slate-100 group-hover:text-indigo-400">Global AI Team</h4><p class="text-[10px] text-emerald-400 font-medium">Active Now</p></div>
+                                </div>
+                                <div class="flex space-x-2 text-indigo-400">
+                                    <button onclick="switchModule('calling')" class="p-2 hover:bg-indigo-500/10 rounded-xl transition" title="Start Voice Call"><i class="fas fa-phone"></i></button>
+                                    <button onclick="switchModule('calling')" class="p-2 hover:bg-indigo-500/10 rounded-xl transition" title="Start Video Call"><i class="fas fa-video"></i></button>
+                                </div>
+                            </div>
+                            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3">
+                                <div class="flex items-end space-x-2">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-6 h-6 rounded-lg object-cover cursor-pointer" onclick="switchModule('profile')">
+                                    <div class="bg-slate-800 p-3 rounded-2xl text-xs text-slate-200 max-w-xs border border-slate-700">
+                                        Hey Elisha, all Facebook features + Canva/CapCut suites and I&M Vault are deployed and ready for global markets!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-slate-900/60 border-t border-slate-800 flex items-center space-x-2">
+                                <input type="text" id="chat-input" placeholder="Type a secure message..." class="glass-input rounded-xl px-4 py-2 text-xs flex-1">
+                                <button onclick="sendMessage()" class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-semibold hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/20">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if(module === 'suites') {
+                viewport.innerHTML = `
+                    <div class="glass-panel rounded-3xl p-6 space-y-4 border border-slate-800 shadow-xl">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl font-bold border border-purple-500/20">
+                                <i class="fas fa-wand-magic-sparkles"></i>
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-base text-slate-100">Canva & CapCut Creative Suites</h2>
+                                <p class="text-xs text-slate-400">Multi-track video timeline & graphic design canvas</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <input type="text" placeholder="Enter design or video editing prompt..." class="glass-input rounded-xl px-4 py-3 w-full text-xs">
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="alert('CapCut reel rendering initialized.')" class="bg-purple-600 hover:bg-purple-700 text-white py-2.5 rounded-xl text-xs font-semibold transition shadow-lg shadow-purple-500/20">Render CapCut Reel</button>
+                                <button onclick="alert('Canva graphic canvas opened.')" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl text-xs font-semibold transition shadow-lg shadow-indigo-500/20">Generate Canva Graphic</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if(module === 'ai') {
+                viewport.innerHTML = `
+                    <div class="glass-panel rounded-3xl p-6 space-y-4 border border-slate-800 shadow-xl">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold border border-emerald-500/20">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-base text-slate-100">Heavy AI Editing Core</h2>
+                                <p class="text-xs text-slate-400">Smart-cutting, auto-captioning & Invideo AI script engine</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <textarea rows="3" placeholder="Enter script generation or AI video prompt..." class="glass-input rounded-xl p-3 w-full text-xs"></textarea>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="alert('AI Script generated successfully.')" class="bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-xs font-semibold transition shadow-lg shadow-emerald-500/20">Generate AI Script</button>
+                                <button onclick="alert('Smart-cut & caption applied.')" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl text-xs font-semibold transition shadow-lg shadow-indigo-500/20">Smart-Cut & Caption</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if(module === 'entertainment') {
+                viewport.innerHTML = `
+                    <div class="glass-panel rounded-3xl p-6 space-y-4 border border-slate-800 shadow-xl">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-xl font-bold border border-pink-500/20">
+                                <i class="fas fa-photo-film"></i>
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-base text-slate-100">Movies & Global Music Library</h2>
+                                <p class="text-xs text-slate-400">Adaptive streaming & secure offline vault</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/60 p-4 rounded-2xl space-y-2 border border-slate-800">
+                            <h3 class="font-bold text-xs text-slate-200">🎬 Online / Offline Movie Streaming</h3>
+                            <div class="flex space-x-2 pt-1">
+                                <button onclick="alert('Streaming adaptive 4K stream...')" class="bg-pink-600 hover:bg-pink-700 text-white px-3 py-2 rounded-xl text-xs font-semibold transition">Stream Movie</button>
+                                <button onclick="alert('Movie downloaded to secure offline vault.')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl text-xs font-semibold transition border border-slate-700">Download Offline</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if(module === 'calling') {
+                viewport.innerHTML = `
+                    <div class="glass-panel rounded-3xl p-6 space-y-4 border border-slate-800 shadow-xl">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-400 flex items-center justify-center text-xl font-bold border border-teal-500/20">
+                                <i class="fas fa-phone-volume"></i>
+                            </div>
+                            <div>
+                                <h2 class="font-bold text-base text-slate-100">Voice & Video Calling Center</h2>
+                                <p class="text-xs text-slate-400">Encrypted peer-to-peer studio communication</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <input type="text" placeholder="Enter contact name or phone number..." class="glass-input rounded-xl px-4 py-3 w-full text-xs">
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="alert('Voice call initiated.')" class="bg-teal-600 hover:bg-teal-700 text-white py-2.5 rounded-xl text-xs font-semibold transition shadow-lg shadow-teal-500/20">Start Voice Call</button>
+                                <button onclick="alert('Video call initiated.')" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl text-xs font-semibold transition shadow-lg shadow-indigo-500/20">Start Video Call</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if(module === 'wallet') {
+                viewport.innerHTML = `
+                    <div class="glass-panel rounded-3xl p-6 space-y-4 border border-slate-800 shadow-xl">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl font-bold border border-amber-500/20">
+                                    <i class="fas fa-vault"></i>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-base text-slate-100">I&M Bank & Vault Tiers</h2>
+                                    <p class="text-xs text-slate-400">Solo Business Account & Lifetime Pass</p>
+                                </div>
+                            </div>
+                            <button onclick="alert('Vault synced successfully.')" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-semibold transition">Refresh</button>
+                        </div>
+                        <div class="bg-slate-900/80 p-4 rounded-2xl font-mono text-xs text-slate-300 border border-slate-800 leading-relaxed">
+                            I&M Bank Solo Business Account connected.<br>
+                            Available Balance: $4,850.00<br>
+                            Subscription: Lifetime Creator Pass (Active - Global Markets Ready)
+                        </div>
+                    </div>
+                `;
+            } else if(module === 'security') {
+                viewport.innerHTML = `
+                    <div class="glass-panel rounded-3xl p-6 space-y-4 border border-slate-800 shadow-xl">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-xl font-bold border border-rose-500/20">
+                                    <i class="fas fa-shield-halved"></i>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold text-base text-slate-100">Security & Fraud Audit</h2>
+                                    <p class="text-xs text-slate-400">Velocity check & transaction risk analysis</p>
+                                </div>
+                            </div>
+                            <button onclick="alert('Security Audit Passed: No fraud risk detected.')" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-xl text-xs font-semibold transition shadow-lg shadow-rose-500/20">Run Audit</button>
+                        </div>
+                        <div class="bg-slate-900/80 p-4 rounded-2xl font-mono text-xs text-slate-300 border border-slate-800">
+                            Security status optimal. All global tokens and API endpoints secure.
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function viewUserProfile(name, avatar, followers, bio) {
+            const viewport = document.getElementById('center-viewport');
+            viewport.innerHTML = `
+                <div class="glass-panel rounded-3xl shadow-xl overflow-hidden space-y-4 border border-slate-800">
+                    <div class="relative bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 h-48">
+                        <div class="absolute -bottom-10 left-6 flex items-end space-x-4">
+                            <img src="${avatar}" class="w-32 h-32 rounded-3xl border-4 border-slate-900 object-cover shadow-2xl bg-slate-900">
+                        </div>
+                    </div>
+                    <div class="pt-12 px-6 pb-4 flex flex-col md:flex-row md:items-center md:justify-between border-b border-slate-800 space-y-3 md:space-y-0">
+                        <div>
+                            <h1 class="text-2xl font-black text-slate-100">${name}</h1>
+                            <p class="text-xs text-slate-400 mt-0.5">${bio}</p>
+                            <div class="flex space-x-6 mt-3 text-xs">
+                                <div><span class="font-bold text-slate-100">${followers}</span></div>
+                                <div><span class="font-bold text-slate-100">240</span> <span class="text-slate-400">Following</span></div>
+                                <div><span class="font-bold text-slate-100">42</span> <span class="text-slate-400">Posts</span></div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="switchModule('messaging')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl font-semibold text-xs transition shadow-lg shadow-indigo-500/20">Message</button>
+                            <button onclick="switchModule('feed')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-xl font-semibold text-xs transition border border-slate-700">Back to Feed</button>
+                        </div>
+                    </div>
+
+                    <div class="p-6 space-y-4">
+                        <h3 class="font-bold text-xs text-slate-200">Recent Posts & Media by ${name}</h3>
+                        <div class="glass-panel rounded-2xl border border-slate-800 p-4 space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <img src="${avatar}" class="w-10 h-10 rounded-xl object-cover">
+                                <div><h4 class="font-bold text-xs text-slate-100">${name}</h4><p class="text-[11px] text-slate-400">3 hours ago · Public</p></div>
+                            </div>
+                            <p class="text-sm text-slate-200">Building next-gen decentralized social and AI creator workflows on blueWORLD.NWO!</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function switchProfileTab(tab) {
+            ['posts', 'photos', 'videos', 'likes'].forEach(t => {
+                const btn = document.getElementById('ptab-' + t);
+                if(btn) {
+                    if(t === tab) {
+                        btn.className = 'pb-3 border-b-2 border-indigo-500 text-indigo-400';
+                    } else {
+                        btn.className = 'pb-3 border-b-2 border-transparent hover:text-slate-200';
+                    }
+                }
+            });
+            const content = document.getElementById('profile-tab-content');
+            if(tab === 'photos') {
+                content.innerHTML = `
+                    <h3 class="font-bold text-xs text-slate-200 mb-3">Photos Posted (32)</h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&h=300&fit=crop" class="rounded-xl object-cover h-28 w-full border border-slate-800">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=300&h=300&fit=crop" class="rounded-xl object-cover h-28 w-full border border-slate-800">
+                        <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=300&h=300&fit=crop" class="rounded-xl object-cover h-28 w-full border border-slate-800">
+                    </div>
+                `;
+            } else if(tab === 'videos') {
+                content.innerHTML = `
+                    <h3 class="font-bold text-xs text-slate-200 mb-3">Videos & Reels Posted (18)</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-slate-900/60 rounded-2xl p-3 flex items-center space-x-3 border border-slate-800">
+                            <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center"><i class="fas fa-play text-xs"></i></div>
+                            <div><h4 class="font-bold text-xs text-slate-100">AI Studio Reel #1</h4><p class="text-[10px] text-slate-400">1.2K views · 142 likes</p></div>
+                        </div>
+                        <div class="bg-slate-900/60 rounded-2xl p-3 flex items-center space-x-3 border border-slate-800">
+                            <div class="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center"><i class="fas fa-play text-xs"></i></div>
+                            <div><h4 class="font-bold text-xs text-slate-100">CapCut Global Workflow</h4><p class="text-[10px] text-slate-400">850 views · 98 likes</p></div>
+                        </div>
+                    </div>
+                `;
+            } else if(tab === 'likes') {
+                content.innerHTML = `
+                    <h3 class="font-bold text-xs text-slate-200 mb-3">Liked Posts & Media (1.2K)</h3>
+                    <p class="text-xs text-slate-400">All liked studio updates and community reels are stored securely.</p>
+                `;
+            } else {
+                content.innerHTML = `
+                    <div class="glass-panel rounded-2xl border border-slate-800 p-4 space-y-3">
+                        <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchModule('profile')">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-10 h-10 rounded-xl object-cover">
+                            <div><h4 class="font-bold text-xs text-slate-100 group-hover:text-indigo-400">Elisha Makoi</h4><p class="text-[11px] text-slate-400">2 hours ago · Public</p></div>
+                        </div>
+                        <p class="text-sm text-slate-200">Deploying Next.js full-stack apps with global edge-cache routers and Python AI backends!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function selectChat(name, preview) {
+            document.getElementById('active-chat-name').innerText = name;
+            const msgs = document.getElementById('chat-messages');
+            msgs.innerHTML += `
+                <div class="flex items-end space-x-2">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-6 h-6 rounded-lg object-cover cursor-pointer" onclick="switchModule('profile')">
+                    <div class="bg-slate-800 p-3 rounded-2xl text-xs text-slate-200 max-w-xs border border-slate-700">
+                        Switched chat to ${name}: "${preview}"
+                    </div>
+                </div>
+            `;
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input ? input.value.trim() : '';
+            if(!text) return;
+            const msgs = document.getElementById('chat-messages');
+            msgs.innerHTML += `
+                <div class="flex items-end justify-end space-x-2">
+                    <div class="bg-indigo-600 text-white p-3 rounded-2xl text-xs max-w-xs shadow-lg shadow-indigo-500/20">
+                        ${text}
+                    </div>
+                </div>
+            `;
+            input.value = '';
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+
+        function openConnector(title, desc) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('feature-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('feature-modal').classList.add('hidden');
+        }
+
+        function toggleLike(btn) {
+            const icon = btn.querySelector('i');
+            const span = btn.querySelector('span');
+            if(icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas', 'text-indigo-400');
+                span.classList.add('text-indigo-400');
+            } else {
+                icon.classList.remove('fas', 'text-indigo-400');
+                icon.classList.add('far');
+                span.classList.remove('text-indigo-400');
+            }
+        }
+
+        function createPost(type) {
+            const input = document.getElementById('post-input');
+            const text = input ? input.value.trim() : '';
+            const content = text || 'Live Global Studio AI agent deployment update.';
+            const feed = document.getElementById('feed-stream');
+            if(!feed) return;
+            
+            const postHTML = `
+                <div class="glass-panel rounded-3xl p-5 space-y-4 shadow-xl border border-slate-800">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchModule('profile')">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" class="w-10 h-10 rounded-2xl object-cover ring-2 ring-indigo-500/30">
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-100 group-hover:text-indigo-400 transition">Elisha Makoi</h4>
+                                <p class="text-[11px] text-slate-400">Just now · <i class="fas fa-globe"></i></p>
+                            </div>
+                        </div>
+                        <button class="text-slate-400 hover:text-slate-200"><i class="fas fa-ellipsis"></i></button>
+                    </div>
+                    <p class="text-sm text-slate-200 leading-relaxed">${content}</p>
+                    <div class="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-800/60 pb-2">
+                        <span>👍 1 Like</span>
+                        <span>0 Comments · 0 Shares</span>
+                    </div>
+                    <div class="grid grid-cols-3 text-center text-slate-300 font-semibold text-xs">
+                        <button onclick="toggleLike(this)" class="hover:bg-slate-800/60 py-2.5 rounded-xl transition flex items-center justify-center space-x-2">
+                            <i class="far fa-thumbs-up"><span>Like</span></i>
+                        </button>
+                        <button onclick="alert('Comment box opened.')" class="hover:bg-slate-800/60 py-2.5 rounded-xl transition flex items-center justify-center space-x-2">
+                            <i class="far fa-comment"><span>Comment</span></i>
+                        </button>
+                        <button onclick="alert('Shared globally.')" class="hover:bg-slate-800/60 py-2.5 rounded-xl transition flex items-center justify-center space-x-2">
+                            <i class="far fa-share-square"><span>Share</span></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            feed.insertAdjacentHTML('afterbegin', postHTML);
+            if(input) input.value = '';
+        }
+
+        window.onload = () => {
+            switchModule('feed');
+        };
+    </script>
+</body>
+</html>

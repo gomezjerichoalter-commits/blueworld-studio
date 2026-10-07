@@ -1,0 +1,21 @@
+﻿{
+  "name": "Blueworld NWO Studio",
+  "short_name": "Blueworld",
+  "description": "All-in-one AI media production and social hub by Kutata Elisha",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18191a",
+  "theme_color": "#2d88ff",
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

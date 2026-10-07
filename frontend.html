@@ -1,0 +1,106 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueworld NWO Studio</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0b0f19; color: #f3f4f6; font-family: system-ui, -apple-system, sans-serif; }
+        .glass-panel { background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start p-4">
+    <div class="w-full max-w-md glass-panel rounded-2xl p-4 mb-4 flex items-center justify-between shadow-xl">
+        <div class="flex items-center space-x-2">
+            <span class="text-xl font-black tracking-wider bg-gradient-to-r from-cyan-400 to-indigo-500 bg-clip-text text-transparent">blueworld</span>
+            <i class="fa-solid fa-circle-check text-cyan-400 text-sm"></i>
+        </div>
+        <div class="flex items-center space-x-3 text-gray-400">
+            <i class="fa-solid fa-magnifying-glass hover:text-white cursor-pointer"></i>
+            <i class="fa-solid fa-comment-dots hover:text-white cursor-pointer"></i>
+            <i class="fa-solid fa-bell hover:text-white cursor-pointer"></i>
+        </div>
+    </div>
+    <div class="w-full max-w-md glass-panel rounded-2xl p-5 shadow-2xl">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold flex items-center space-x-2 text-cyan-400">
+                <i class="fa-solid fa-bolt"></i>
+                <span>AI Cinematic Auto-Cutter</span>
+            </h2>
+            <span class="text-xs bg-indigo-500/20 text-indigo-300 px-2.5 py-1 rounded-full font-medium border border-indigo-500/30">Pro Engine</span>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Project Name</label>
+                <input id="projectName" type="text" value="Sovereign_Vlog_Ep1" class="w-full bg-gray-900/80 border border-gray-700/60 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-400">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800 flex items-center justify-between">
+                    <span class="text-xs font-medium text-gray-300">Auto-Cut Silences</span>
+                    <input id="autoCut" type="checkbox" checked class="w-4 h-4 accent-cyan-400 cursor-pointer">
+                </div>
+                <div class="bg-gray-900/60 p-3 rounded-xl border border-gray-800 flex items-center justify-between">
+                    <span class="text-xs font-medium text-gray-300">AI Visual Polish</span>
+                    <input id="aiEnhance" type="checkbox" checked class="w-4 h-4 accent-indigo-400 cursor-pointer">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Dynamic Caption Style</label>
+                <select id="captionStyle" class="w-full bg-gray-900/80 border border-gray-700/60 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-400">
+                    <option value="Cosmic Neon Gradient">Cosmic Neon Gradient (CapCut Style)</option>
+                    <option value="TikTok Pop Bold">TikTok Pop Bold (Yellow Highlight)</option>
+                    <option value="Cinematic Minimal">Cinematic Minimal Subtitles</option>
+                </select>
+            </div>
+            <button onclick="runAutoCutter()" class="w-full bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 cursor-pointer">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Run Smart AI Render</span>
+            </button>
+        </div>
+        <div id="resultPanel" class="mt-4 hidden bg-gray-900/90 border border-cyan-500/30 rounded-xl p-4">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-2 flex items-center space-x-1.5">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Render Telemetry Report</span>
+            </h3>
+            <div id="resultContent" class="text-xs text-gray-300 space-y-1 font-mono"></div>
+        </div>
+    </div>
+    <script>
+        async function runAutoCutter() {
+            const projectName = document.getElementById("projectName").value;
+            const autoCut = document.getElementById("autoCut").checked;
+            const aiEnhance = document.getElementById("aiEnhance").checked;
+            const captionStyle = document.getElementById("captionStyle").value;
+            const resultPanel = document.getElementById("resultPanel");
+            const resultContent = document.getElementById("resultContent");
+            resultPanel.classList.remove("hidden");
+            resultContent.innerHTML = "<span class=\"text-yellow-400\">⚡ Initializing AI timeline analysis & smart cutting...</span>";
+            try {
+                const response = await fetch("http://127.0.0.1:8080/api/ai-autocut", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ project_name: projectName, auto_cut_silence: autoCut, caption_style: captionStyle, ai_enhancement: aiEnhance })
+                });
+                const data = await response.json();
+                if (data.status === "success") {
+                    resultContent.innerHTML = `
+                        <p class="text-green-400">✔ ${data.message}</p>
+                        <p>• Dead/Silent Cuts Removed: <span class="text-white font-bold">${data.metrics.cuts_removed}</span></p>
+                        <p>• Time Saved: <span class="text-white font-bold">${data.metrics.time_saved_seconds}s</span></p>
+                        <p>• Captions Applied: <span class="text-white font-bold">${data.metrics.caption_style_applied}</span></p>
+                        <p>• Profile Target: <span class="text-cyan-300">${data.metrics.render_resolution}</span></p>
+                    `;
+                } else {
+                    resultContent.innerHTML = "<span class=\"text-red-400\">Error processing timeline.</span>";
+                }
+            } catch (err) {
+                resultContent.innerHTML = `<span class=\"text-red-400\">Connection error: ${err.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
+
